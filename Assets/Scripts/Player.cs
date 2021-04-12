@@ -18,12 +18,19 @@ public class Player : MonoBehaviour
     [SerializeField] float _reloadRate = .15f;
 
     GameObject _self;
+    SpawnManager _spawnManager;
     bool _canFire = true;
 
     void Start()
     {
         _self = gameObject;
+        _spawnManager = GameObject.Find("SpawnManager").GetComponent<SpawnManager>();
         transform.position = new Vector3(0, 0, 0);
+
+        if (_spawnManager == null)
+        {
+            Debug.LogError("Spawn Manager is null");
+        }
     }
 
     void Update()
@@ -79,6 +86,7 @@ public class Player : MonoBehaviour
         _playerLives--;
         if (_playerLives <= 0)
         {
+            _spawnManager.PlayerKilled();
             Destroy(_self);
         }
     }
