@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Enemy
   - PlayerWeapon
+  - Collectible
   layers:
   - Default
   - TransparentFX
@@ -42,4 +43,10 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Background
+    uniqueID: 4286445023
+    locked: 0
+  - name: GameBoard
+    uniqueID: 2028793407
     locked: 0
