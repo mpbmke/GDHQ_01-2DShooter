@@ -10,10 +10,17 @@ public class Enemy : MonoBehaviour
     float _bottomBound = -5.45f;
 
     GameObject _self;
+    Player _player;
 
     void Start()
     {
         _self = gameObject;
+        _player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
+
+        if (_player == null)
+        {
+            Debug.LogError("Player component is NULL");
+        }
     }
 
     void Update()
@@ -36,21 +43,12 @@ public class Enemy : MonoBehaviour
     {
         if (other.transform.tag == "Player")
         {
-            Player player = other.transform.GetComponent<Player>();
-
-            if (player != null)
-            {
-                player.PlayerDamage();
-                Destroy(_self);
-            }
-            else
-            {
-                Debug.LogError("Player component is null");
-            }
-            
+            _player.PlayerDamage();
+            Destroy(_self);
         }
         else if (other.transform.tag == "PlayerWeapon")
         {
+            _player.AddScore(10);
             Destroy(other.gameObject);
             Destroy(_self);
         }

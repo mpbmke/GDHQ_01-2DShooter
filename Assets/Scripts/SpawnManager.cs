@@ -6,7 +6,6 @@ public class SpawnManager : MonoBehaviour
 {
     [SerializeField] GameObject _enemyPrefab;
     [SerializeField] GameObject _enemyContainer;
-    [SerializeField] GameObject _tripleShotCollectible;
     [SerializeField] GameObject[] _powerUps;
     [SerializeField] float _spawnHeight;
     [SerializeField] float _spawnLeftBound;
@@ -16,6 +15,12 @@ public class SpawnManager : MonoBehaviour
 
     void Start()
     {
+        NewGameSM();
+    }
+
+    public void NewGameSM()
+    {
+        _stopSpawning = false;
         StartCoroutine(SpawnEnemyRoutine());
         StartCoroutine(SpawnPowerupRoutine());
     }

@@ -20,7 +20,10 @@ public class Player : MonoBehaviour
 
     GameObject _self;
     SpawnManager _spawnManager;
+    UIManager _uiManager;
+    GameManager _gameManager;
     bool _canFire = true;
+    [SerializeField] int _score;
     
     //Power-Ups
     [SerializeField] bool _tripleShotActive = false;
@@ -36,12 +39,26 @@ public class Player : MonoBehaviour
     {
         _self = gameObject;
         _spawnManager = GameObject.Find("SpawnManager").GetComponent<SpawnManager>();
+        _uiManager = GameObject.Find("Canvas").GetComponent<UIManager>();
+        _gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
         transform.position = new Vector3(0, 0, 0);
 
         if (_spawnManager == null)
         {
             Debug.LogError("Spawn Manager is null");
         }
+
+        if (_uiManager == null)
+        {
+            Debug.LogError("UI Manager is null");
+        }
+
+        if(_gameManager == null)
+        {
+            Debug.LogError("Game Manager is null");
+        }
+
+        _uiManager.UpdateLives(_playerLives);
     }
 
     void Update()
@@ -69,6 +86,12 @@ public class Player : MonoBehaviour
             _canFire = false;
             StartCoroutine(ReloadTimer());
         }
+    }
+
+    public void AddScore(int points)
+    {
+        _score += points;
+        _uiManager.UpdateScore(_score);
     }
 
     IEnumerator ReloadTimer()
@@ -118,10 +141,13 @@ public class Player : MonoBehaviour
         else if (_shieldsActive == false)
         {
             _playerLives--;
-            if (_playerLives <= 0)
+            _uiManager.UpdateLives(_playerLives);
+            
+            if (_playerLives < 0)
             {
                 _spawnManager.PlayerKilled();
-                Destroy(_self);
+                _gameManager.GameOver();
+                _self.SetActive(false);
             }
         }
     }
