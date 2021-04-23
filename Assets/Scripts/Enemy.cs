@@ -11,15 +11,22 @@ public class Enemy : MonoBehaviour
 
     GameObject _self;
     Player _player;
+    Animator _anim;
 
     void Start()
     {
         _self = gameObject;
+        _anim = _self.GetComponent<Animator>();
         _player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
 
         if (_player == null)
         {
             Debug.LogError("Player component is NULL");
+        }
+
+        if (_anim == null)
+        {
+            Debug.LogError("Enemy Animator component is NULL");
         }
     }
 
@@ -44,13 +51,17 @@ public class Enemy : MonoBehaviour
         if (other.transform.tag == "Player")
         {
             _player.PlayerDamage();
-            Destroy(_self);
+            _enemySpeed = 1.5f;
+            _anim.SetTrigger("OnEnemyDeath");
+            Destroy(_self, 2.8f);
         }
         else if (other.transform.tag == "PlayerWeapon")
         {
             _player.AddScore(10);
+            _enemySpeed = 1.5f;
+            _anim.SetTrigger("OnEnemyDeath");
             Destroy(other.gameObject);
-            Destroy(_self);
+            Destroy(_self, 2.8f);
         }
     }
 }
