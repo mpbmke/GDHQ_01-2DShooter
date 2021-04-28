@@ -5,6 +5,7 @@ using UnityEngine;
 public class Enemy : MonoBehaviour
 {
     [SerializeField] float _enemySpeed = 4f;
+    [SerializeField] GameObject _enemyLaser;
 
     float _topBound = 7.5f;
     float _bottomBound = -5.45f;
@@ -12,12 +13,16 @@ public class Enemy : MonoBehaviour
     GameObject _self;
     Player _player;
     Animator _anim;
+    SoundFX _soundFXSource;
+
 
     void Start()
     {
         _self = gameObject;
         _anim = _self.GetComponent<Animator>();
         _player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
+        _soundFXSource = GameObject.FindGameObjectWithTag("SFXManager").GetComponent<SoundFX>();
+
 
         if (_player == null)
         {
@@ -28,6 +33,26 @@ public class Enemy : MonoBehaviour
         {
             Debug.LogError("Enemy Animator component is NULL");
         }
+
+        if (_soundFXSource == null)
+        {
+            Debug.LogError("SoundFX Source on Enemy is null");
+        }
+
+        if (_enemyLaser == null)
+        {
+            Debug.LogError("Enemy Laser prefab is null");
+        }
+
+        StartCoroutine(EnemyFire());
+    }
+    
+    IEnumerator EnemyFire()
+    {
+        var fireInterval = Random.Range(.5f, 2.5f);
+
+        yield return new WaitForSeconds(fireInterval);
+        Instantiate(_enemyLaser, transform.position, Quaternion.Euler(0, 0, 180));
     }
 
     void Update()
@@ -57,9 +82,13 @@ public class Enemy : MonoBehaviour
         }
         else if (other.transform.tag == "PlayerWeapon")
         {
+            StopCoroutine(EnemyFire());
             _player.AddScore(10);
             _enemySpeed = 1.5f;
             _anim.SetTrigger("OnEnemyDeath");
+            _soundFXSource.ExplosionAudio();
+            GetComponent<Collider2D>().enabled = false;
+            //other.GetComponent<SpriteRenderer>().enabled = false;
             Destroy(other.gameObject);
             Destroy(_self, 2.8f);
         }

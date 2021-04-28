@@ -20,11 +20,21 @@ public class Laser : MonoBehaviour
         {
             Destroy(transform.parent.gameObject);
         }
-        else if (transform.position.y > 7f)
+        else if (transform.position.y > 7f || transform.position.y < -5.5f)
         {
-            Destroy(_self);
+            Destroy(_self, 1f);
         }
+    }
 
-        
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (_self.tag == "Enemy" && other.tag == "Player")
+        {
+            other.GetComponent<Player>().PlayerDamage();
+        }
+        else
+        {
+            return;
+        }
     }
 }

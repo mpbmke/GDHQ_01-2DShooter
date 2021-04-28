@@ -7,10 +7,18 @@ public class PowerUp : MonoBehaviour
     float _speed = 3f;
     [SerializeField] int _powerupID;
     GameObject _self;
+    SoundFX _soundFXSource;
+
 
     void Start()
     {
         _self = gameObject;
+        _soundFXSource = GameObject.FindGameObjectWithTag("SFXManager").GetComponent<SoundFX>();
+
+        if (_soundFXSource == null)
+        {
+            Debug.LogError("SoundFX Source on Power-Up is null");
+        }
     }
 
     void Update()
@@ -23,6 +31,8 @@ public class PowerUp : MonoBehaviour
         if (other.tag == "Player")
         {
             Player player = other.transform.GetComponent<Player>();
+
+            _soundFXSource.PoweUpAudio();
             
             switch (_powerupID)
             {

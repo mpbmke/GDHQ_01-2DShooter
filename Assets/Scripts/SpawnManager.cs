@@ -13,11 +13,6 @@ public class SpawnManager : MonoBehaviour
 
     [SerializeField] bool _stopSpawning = false;
 
-    void Start()
-    {
-        NewGameSM();
-    }
-
     public void NewGameSM()
     {
         _stopSpawning = false;
@@ -27,6 +22,7 @@ public class SpawnManager : MonoBehaviour
 
     IEnumerator SpawnEnemyRoutine()
     {
+        yield return new WaitForSeconds(1.5f);
         while (_stopSpawning == false)
         {
             var spawnPos = new Vector3(Random.Range(_spawnLeftBound, _spawnRightBound), _spawnHeight, 0);
@@ -38,6 +34,7 @@ public class SpawnManager : MonoBehaviour
 
     IEnumerator SpawnPowerupRoutine()
     {
+        yield return new WaitForSeconds(3.5f);
         while (_stopSpawning == false)
         {
             var spawnPos = new Vector3(Random.Range(_spawnLeftBound, _spawnRightBound), _spawnHeight, 0);

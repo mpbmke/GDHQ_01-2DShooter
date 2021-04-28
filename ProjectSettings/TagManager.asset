@@ -7,11 +7,13 @@ TagManager:
   - Enemy
   - PlayerWeapon
   - Collectible
+  - SpawnManager
+  - SFXManager
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - PostProcessing
   - Water
   - UI
   - 

@@ -15,6 +15,7 @@ public class Player : MonoBehaviour
 
     [SerializeField] GameObject _laserPrefab;
     [SerializeField] GameObject _tripleShotPrefab;
+    [SerializeField] GameObject[] _damageAnims;
     [SerializeField] float _laserSpawnOffset;
     [SerializeField] float _reloadRate = .15f;
 
@@ -22,6 +23,9 @@ public class Player : MonoBehaviour
     SpawnManager _spawnManager;
     UIManager _uiManager;
     GameManager _gameManager;
+    SoundFX _soundFXSource;
+
+
     bool _canFire = true;
     [SerializeField] int _score;
     
@@ -41,6 +45,8 @@ public class Player : MonoBehaviour
         _spawnManager = GameObject.Find("SpawnManager").GetComponent<SpawnManager>();
         _uiManager = GameObject.Find("Canvas").GetComponent<UIManager>();
         _gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+        _soundFXSource = GameObject.FindGameObjectWithTag("SFXManager").GetComponent<SoundFX>();
+
         transform.position = new Vector3(0, 0, 0);
 
         if (_spawnManager == null)
@@ -58,7 +64,22 @@ public class Player : MonoBehaviour
             Debug.LogError("Game Manager is null");
         }
 
+        if (_damageAnims == null)
+        {
+            Debug.LogError("Damage Animation/s is/are null");
+        }
+
+        if (_soundFXSource == null)
+        {
+            Debug.LogError("SoundFX Source on Player is null");
+        }
+
         _uiManager.UpdateLives(_playerLives);
+
+        foreach (var anim in _damageAnims)
+        {
+            anim.SetActive(false);
+        }
     }
 
     void Update()
@@ -83,6 +104,7 @@ public class Player : MonoBehaviour
                 Instantiate(_laserPrefab, spawnPos, Quaternion.identity);
             }
 
+            _soundFXSource.LaserAudio();
             _canFire = false;
             StartCoroutine(ReloadTimer());
         }
@@ -140,8 +162,28 @@ public class Player : MonoBehaviour
         }
         else if (_shieldsActive == false)
         {
+            _soundFXSource.ExplosionAudio();
             _playerLives--;
             _uiManager.UpdateLives(_playerLives);
+
+            switch (_playerLives)
+            {
+                case 3:
+                    foreach (var anim in _damageAnims)
+                    {
+                        anim.SetActive(false);
+                    }
+                    break;
+                case 2:
+                    _damageAnims[0].SetActive(true);
+                    break;
+                case 1:
+                    _damageAnims[1].SetActive(true);
+                    break;
+                case 0:
+                    _damageAnims[2].SetActive(true);
+                    break;
+            }
             
             if (_playerLives < 0)
             {
