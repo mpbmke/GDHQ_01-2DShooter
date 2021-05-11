@@ -135,6 +135,7 @@ GameObject:
   - component: {fileID: 122530967}
   - component: {fileID: 122530966}
   - component: {fileID: 122530969}
+  - component: {fileID: 122530970}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -200,13 +201,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 122530965}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0.0050614406, y: 0, z: 0, w: 0.99998724}
   m_LocalPosition: {x: 0, y: 1, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -0.58, y: 0, z: 0}
 --- !u!114 &122530969
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -267,6 +268,19 @@ MonoBehaviour:
   m_BeforeTransparentBundles: []
   m_BeforeStackBundles: []
   m_AfterStackBundles: []
+--- !u!114 &122530970
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 122530965}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 159c9cd8877b3d74db7b039c3027aff1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _magnitude: 0.5
 --- !u!1 &212737517
 GameObject:
   m_ObjectHideFlags: 0
@@ -1153,6 +1167,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _speed: 5
+  _thrustMultiplier: 1.5
   _playerLives: 3
   _laserPrefab: {fileID: 1679262638909794735, guid: f5335792648acd04c826b1bf1b955571, type: 3}
   _tripleShotPrefab: {fileID: 1861069938373273046, guid: 880aff6ddf7e2124ab99432659156591, type: 3}
@@ -1165,7 +1180,7 @@ MonoBehaviour:
   _score: 0
   _tripleShotActive: 0
   _tripleShotDuration: 5
-  _speedMultiplier: 1.5
+  _speedBoostMultiplier: 1.5
   _speedBoostDuration: 5
   _shield: {fileID: 1783052553}
   _shieldsActive: 0

@@ -1,10 +1,9 @@
 fileFormatVersion: 2
-guid: ee2acba0221cc2542878af5184cd8a71
+guid: 159c9cd8877b3d74db7b039c3027aff1
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences:
-  - _enemyLaser: {fileID: 1679262638909794735, guid: 0393966ff432d454caa4f5fbcaadfbc4, type: 3}
+  defaultReferences: []
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

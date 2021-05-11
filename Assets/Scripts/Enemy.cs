@@ -15,6 +15,8 @@ public class Enemy : MonoBehaviour
     Animator _anim;
     SoundFX _soundFXSource;
 
+    IEnumerator enemyFireCoroutine;
+
 
     void Start()
     {
@@ -44,7 +46,8 @@ public class Enemy : MonoBehaviour
             Debug.LogError("Enemy Laser prefab is null");
         }
 
-        StartCoroutine(EnemyFire());
+        enemyFireCoroutine = EnemyFire();
+        StartCoroutine(enemyFireCoroutine);
     }
     
     IEnumerator EnemyFire()
@@ -73,6 +76,8 @@ public class Enemy : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
+        StopCoroutine(enemyFireCoroutine);
+
         if (other.transform.tag == "Player")
         {
             _player.PlayerDamage();
@@ -82,13 +87,11 @@ public class Enemy : MonoBehaviour
         }
         else if (other.transform.tag == "PlayerWeapon")
         {
-            StopCoroutine(EnemyFire());
             _player.AddScore(10);
             _enemySpeed = 1.5f;
             _anim.SetTrigger("OnEnemyDeath");
             _soundFXSource.ExplosionAudio();
             GetComponent<Collider2D>().enabled = false;
-            //other.GetComponent<SpriteRenderer>().enabled = false;
             Destroy(other.gameObject);
             Destroy(_self, 2.8f);
         }

@@ -9,7 +9,7 @@ public class Player : MonoBehaviour
     [SerializeField] int _playerLives = 3;
 
     //Movement Bounds
-    private float _upperBound = 0f;
+    private float _upperBound = 3.5f;
     private float _lowerBound = -4f;
     private float _rightBound = 11.3f;
     private float _leftBound = -11.3f;
@@ -155,6 +155,8 @@ public class Player : MonoBehaviour
 
     public void PlayerDamage()
     {
+        StartCoroutine(Camera.main.GetComponent<CameraBehavior>().CameraShake());
+
         if (_shieldsActive == true)
         {
             _shieldsActive = false;
