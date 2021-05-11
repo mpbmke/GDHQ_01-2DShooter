@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    [SerializeField] private float _speed = 5f;
+    [SerializeField] float _speed = 5f;
+    [SerializeField] float _thrustMultiplier = 1.5f;
     [SerializeField] int _playerLives = 3;
 
     //Movement Bounds
@@ -33,7 +34,7 @@ public class Player : MonoBehaviour
     [SerializeField] bool _tripleShotActive = false;
     [SerializeField] float _tripleShotDuration = 5f;
     
-    [SerializeField] float _speedMultiplier = 1.5f;
+    [SerializeField] float _speedBoostMultiplier = 1.5f;
     [SerializeField] float _speedBoostDuration = 5f;
 
     [SerializeField] GameObject _shield;
@@ -130,7 +131,14 @@ public class Player : MonoBehaviour
         float verticalInput = Input.GetAxis("Vertical");
         Vector3 direction = new Vector3(horizontalInput, verticalInput, 0);
 
-        transform.Translate(direction * _speed * Time.deltaTime);
+        if (Input.GetKey(KeyCode.LeftShift))
+        {
+            transform.Translate(direction * _speed * _thrustMultiplier * Time.deltaTime);
+        }
+        else
+        {
+            transform.Translate(direction * _speed * Time.deltaTime);
+        }
 
         //Boundaries
         transform.position = new Vector3(transform.position.x, Mathf.Clamp(transform.position.y, _lowerBound, _upperBound), transform.position.z);
@@ -210,14 +218,14 @@ public class Player : MonoBehaviour
     
     public void ActivateSpeedBoost()
     {
-        _speed *= _speedMultiplier;
+        _speed *= _speedBoostMultiplier;
         StartCoroutine(DeactivateSpeedBoost());
     }
 
     IEnumerator DeactivateSpeedBoost()
     {
         yield return new WaitForSeconds(_speedBoostDuration);
-        _speed /= _speedMultiplier;
+        _speed /= _speedBoostMultiplier;
     }
     public void ActivateTripleShot()
     {
