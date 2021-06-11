@@ -8,6 +8,7 @@ public class SoundFX : MonoBehaviour
     [SerializeField] AudioClip _explosionSFX;
     [SerializeField] AudioClip _laserSFX;
     [SerializeField] AudioClip _powerUpSFX;
+    [SerializeField] AudioClip _noAmmo;
 
     void Start()
     {
@@ -32,5 +33,10 @@ public class SoundFX : MonoBehaviour
     public void PoweUpAudio()
     {
         _audioSource.PlayOneShot(_powerUpSFX);
+    }
+
+    public void NoAmmo()
+    {
+        _audioSource.PlayOneShot(_noAmmo);
     }
 }

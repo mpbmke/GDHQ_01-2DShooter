@@ -1169,6 +1169,8 @@ MonoBehaviour:
   _speed: 5
   _thrustMultiplier: 1.5
   _playerLives: 3
+  _ammoCount: 15
+  _maxAmmo: 15
   _laserPrefab: {fileID: 1679262638909794735, guid: f5335792648acd04c826b1bf1b955571, type: 3}
   _tripleShotPrefab: {fileID: 1861069938373273046, guid: 880aff6ddf7e2124ab99432659156591, type: 3}
   _damageAnims:
@@ -1525,6 +1527,7 @@ MonoBehaviour:
   _explosionSFX: {fileID: 8300000, guid: a885c043fab7e46438bba03ba9dab6bc, type: 3}
   _laserSFX: {fileID: 8300000, guid: 75676f361bdfeaf41a46623e95df3dbc, type: 3}
   _powerUpSFX: {fileID: 8300000, guid: 5ee343246919d2b4bba63ae629e95494, type: 3}
+  _noAmmo: {fileID: 8300000, guid: a21fd558db917dc498e0cbcbe4e8b5be, type: 3}
 --- !u!82 &1652884397
 AudioSource:
   m_ObjectHideFlags: 0

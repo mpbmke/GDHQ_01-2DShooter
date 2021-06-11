@@ -7,6 +7,8 @@ public class Player : MonoBehaviour
     [SerializeField] float _speed = 5f;
     [SerializeField] float _thrustMultiplier = 1.5f;
     [SerializeField] int _playerLives = 3;
+    [SerializeField] int _ammoCount = 15;
+    [SerializeField] int _maxAmmo = 15;
 
     //Movement Bounds
     private float _upperBound = 3.5f;
@@ -91,24 +93,37 @@ public class Player : MonoBehaviour
 
     private void FireWeapon()
     {
-        if (Input.GetKeyDown(KeyCode.Space) && _canFire == true)
-        {
-            Vector3 spawnPos;
-            spawnPos = new Vector3(transform.position.x, transform.position.y + _laserSpawnOffset, transform.position.z);
-
-            if (_tripleShotActive == true)
+            if (Input.GetKeyDown(KeyCode.Space) && _canFire == true)
             {
-                Instantiate(_tripleShotPrefab, spawnPos, Quaternion.identity);
-            }
-            else if (_tripleShotActive == false)
-            {
-                Instantiate(_laserPrefab, spawnPos, Quaternion.identity);
-            }
+                if (_ammoCount > 0)
+                {
+                    Vector3 spawnPos;
+                    spawnPos = new Vector3(transform.position.x, transform.position.y + _laserSpawnOffset, transform.position.z);
 
-            _soundFXSource.LaserAudio();
-            _canFire = false;
-            StartCoroutine(ReloadTimer());
-        }
+                    if (_tripleShotActive == true)
+                    {
+                        Instantiate(_tripleShotPrefab, spawnPos, Quaternion.identity);
+                    }
+                    else if (_tripleShotActive == false)
+                    {
+                        Instantiate(_laserPrefab, spawnPos, Quaternion.identity);
+                    }
+
+                    _soundFXSource.LaserAudio();
+                    _canFire = false;
+                    _ammoCount--;
+                    StartCoroutine(ReloadTimer());
+
+                    if (_ammoCount < 0)
+                    {
+                        _ammoCount = 0;
+                    }
+                }
+                else if (_ammoCount <= 0)
+                {
+                _soundFXSource.NoAmmo();
+                }
+            }
     }
 
     public void AddScore(int points)
@@ -249,7 +264,7 @@ public class Player : MonoBehaviour
     {
         if (_playerLives < 3)
         {
-            _playerLives += 1;
+            _playerLives ++;
             _uiManager.UpdateLives(_playerLives);
             PlayerDamageState();
         }
