@@ -175,32 +175,36 @@ public class Player : MonoBehaviour
             _soundFXSource.ExplosionAudio();
             _playerLives--;
             _uiManager.UpdateLives(_playerLives);
+            PlayerDamageState();
 
-            switch (_playerLives)
-            {
-                case 3:
-                    foreach (var anim in _damageAnims)
-                    {
-                        anim.SetActive(false);
-                    }
-                    break;
-                case 2:
-                    _damageAnims[0].SetActive(true);
-                    break;
-                case 1:
-                    _damageAnims[1].SetActive(true);
-                    break;
-                case 0:
-                    _damageAnims[2].SetActive(true);
-                    break;
-            }
-            
             if (_playerLives < 0)
             {
                 _spawnManager.PlayerKilled();
                 _gameManager.GameOver();
                 _self.SetActive(false);
             }
+        }
+    }
+
+    private void PlayerDamageState()
+    {
+        switch (_playerLives)
+        {
+            case 3:
+                foreach (var anim in _damageAnims)
+                {
+                    anim.SetActive(false);
+                }
+                break;
+            case 2:
+                _damageAnims[0].SetActive(true);
+                break;
+            case 1:
+                _damageAnims[1].SetActive(true);
+                break;
+            case 0:
+                _damageAnims[2].SetActive(true);
+                break;
         }
     }
 
@@ -239,5 +243,15 @@ public class Player : MonoBehaviour
     {
         yield return new WaitForSeconds(_tripleShotDuration);
         _tripleShotActive = false;
+    }
+
+    public void ActivateRepair()
+    {
+        if (_playerLives < 3)
+        {
+            _playerLives += 1;
+            _uiManager.UpdateLives(_playerLives);
+            PlayerDamageState();
+        }
     }
 }

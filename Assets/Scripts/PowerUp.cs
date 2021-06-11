@@ -48,6 +48,12 @@ public class PowerUp : MonoBehaviour
                     player.ActivateShields();
                     Destroy(_self);
                     break;
+                case 3:
+                    player.ActivateRepair();
+                    Destroy(_self);
+                    break;
+                default:
+                    break;
             }
         }
     }
