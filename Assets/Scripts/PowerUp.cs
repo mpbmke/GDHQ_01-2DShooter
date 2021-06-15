@@ -32,7 +32,7 @@ public class PowerUp : MonoBehaviour
         {
             Player player = other.transform.GetComponent<Player>();
 
-            _soundFXSource.PoweUpAudio();
+            _soundFXSource.PowerUpAudio();
             
             switch (_powerupID)
             {
@@ -50,6 +50,10 @@ public class PowerUp : MonoBehaviour
                     break;
                 case 3:
                     player.ActivateRepair();
+                    Destroy(_self);
+                    break;
+                case 4:
+                    player.AddAmmo();
                     Destroy(_self);
                     break;
                 default:

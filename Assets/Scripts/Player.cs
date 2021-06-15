@@ -223,6 +223,18 @@ public class Player : MonoBehaviour
         }
     }
 
+    public void AddAmmo()
+    {
+        if (_ammoCount < _maxAmmo)
+        {
+            _ammoCount += 5;
+        }
+        if (_ammoCount > _maxAmmo)
+        {
+            _ammoCount = _maxAmmo; 
+        }
+    }
+
     public void ActivateShields()
     {
         _shieldsActive = true;

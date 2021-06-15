@@ -1660,6 +1660,7 @@ MonoBehaviour:
   - {fileID: 5181255998590337388, guid: fbf3503f117c4784a90e0f3acd831375, type: 3}
   - {fileID: 4502497640007101876, guid: 9c6b80b8398cd2f4fb58f3bc06bbbf95, type: 3}
   - {fileID: 1555745186696230714, guid: 92face2d45b560549849819a33536471, type: 3}
+  - {fileID: 967169598817373977, guid: 5721e16040b4fd940b48257d87051220, type: 3}
   _spawnHeight: 7.4
   _spawnLeftBound: -9.4
   _spawnRightBound: 9.4

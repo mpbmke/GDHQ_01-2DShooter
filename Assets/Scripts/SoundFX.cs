@@ -30,7 +30,7 @@ public class SoundFX : MonoBehaviour
         _audioSource.PlayOneShot(_laserSFX);
     }
 
-    public void PoweUpAudio()
+    public void PowerUpAudio()
     {
         _audioSource.PlayOneShot(_powerUpSFX);
     }
