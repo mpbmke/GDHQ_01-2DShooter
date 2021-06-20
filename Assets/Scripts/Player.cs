@@ -3,44 +3,45 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Player : MonoBehaviour
-{
-    [SerializeField] float _speed = 5f;
-    [SerializeField] float _thrustMultiplier = 1.5f;
-    [SerializeField] int _playerLives = 3;
-    [SerializeField] int _ammoCount = 15;
-    [SerializeField] int _maxAmmo = 15;
-
+{    
+    GameObject _self;
+    SpawnManager _spawnManager;
+    UIManager _uiManager;
+    GameManager _gameManager;
+    SoundFX _soundFXSource;
+    
     //Movement Bounds
     private float _upperBound = 3.5f;
     private float _lowerBound = -4f;
     private float _rightBound = 11.3f;
     private float _leftBound = -11.3f;
 
+    //Prefab Assignments
     [SerializeField] GameObject _laserPrefab;
     [SerializeField] GameObject _tripleShotPrefab;
+    [SerializeField] GameObject _homingMissilePrefab;
     [SerializeField] GameObject[] _damageAnims;
+    [SerializeField] GameObject _shield;
     [SerializeField] float _laserSpawnOffset;
-    [SerializeField] float _reloadRate = .15f;
-
-    GameObject _self;
-    SpawnManager _spawnManager;
-    UIManager _uiManager;
-    GameManager _gameManager;
-    SoundFX _soundFXSource;
-
-
+    [SerializeField] float _missleSpawnOffset;
+    
+    float _reloadRate = .15f;
+    float _speed = 5f;
+    float _thrustMultiplier = 1.5f;
+    int _playerLives = 3;
+    int _ammoCount = 15;
+    int _maxAmmo = 15;
+    int _missileAmmo = 0;
     bool _canFire = true;
-    [SerializeField] int _score;
+    int _score;
     
     //Power-Ups
-    [SerializeField] bool _tripleShotActive = false;
-    [SerializeField] float _tripleShotDuration = 5f;
-    
-    [SerializeField] float _speedBoostMultiplier = 1.5f;
-    [SerializeField] float _speedBoostDuration = 5f;
-
-    [SerializeField] GameObject _shield;
-    [SerializeField] bool _shieldsActive = false;
+    bool _tripleShotActive = false;
+    float _tripleShotDuration = 5f;
+    float _speedBoostMultiplier = 1.5f;
+    float _speedBoostDuration = 5f;
+    bool _shieldsActive = false;
+    bool _heatSeekingActive = false;
 
     void Start()
     {
@@ -93,20 +94,22 @@ public class Player : MonoBehaviour
 
     private void FireWeapon()
     {
-            if (Input.GetKeyDown(KeyCode.Space) && _canFire == true)
+        if (Input.GetKeyDown(KeyCode.Space) && _canFire == true)
+        {
+            if (_heatSeekingActive == false)
             {
                 if (_ammoCount > 0)
                 {
-                    Vector3 spawnPos;
-                    spawnPos = new Vector3(transform.position.x, transform.position.y + _laserSpawnOffset, transform.position.z);
+                    Vector3 laserSpawnPos;
+                    laserSpawnPos = new Vector3(transform.position.x, transform.position.y + _laserSpawnOffset, transform.position.z);
 
                     if (_tripleShotActive == true)
                     {
-                        Instantiate(_tripleShotPrefab, spawnPos, Quaternion.identity);
+                        Instantiate(_tripleShotPrefab, laserSpawnPos, Quaternion.identity);
                     }
                     else if (_tripleShotActive == false)
                     {
-                        Instantiate(_laserPrefab, spawnPos, Quaternion.identity);
+                        Instantiate(_laserPrefab, laserSpawnPos, Quaternion.identity);
                     }
 
                     _soundFXSource.LaserAudio();
@@ -121,9 +124,24 @@ public class Player : MonoBehaviour
                 }
                 else if (_ammoCount <= 0)
                 {
-                _soundFXSource.NoAmmo();
+                    _soundFXSource.NoAmmo();
                 }
             }
+            else if (_heatSeekingActive == true)
+            {
+                if (_missileAmmo > 0)
+                {
+                    Vector3 missileSpawnPos;
+                    missileSpawnPos = new Vector3(transform.position.x, transform.position.y + _missleSpawnOffset, transform.position.z);
+                    Instantiate(_homingMissilePrefab, missileSpawnPos, Quaternion.identity);
+                    _missileAmmo--;
+                }
+                if (_missileAmmo <= 0)
+                {
+                    _heatSeekingActive = false;
+                }
+            }
+        }
     }
 
     public void AddScore(int points)
@@ -280,5 +298,11 @@ public class Player : MonoBehaviour
             _uiManager.UpdateLives(_playerLives);
             PlayerDamageState();
         }
+    }
+
+    public void ActivateHeatSeeking()
+    {
+        _missileAmmo = 3;
+        _heatSeekingActive = true;
     }
 }

@@ -56,6 +56,10 @@ public class PowerUp : MonoBehaviour
                     player.AddAmmo();
                     Destroy(_self);
                     break;
+                case 5:
+                    player.ActivateHeatSeeking();
+                    Destroy(_self);
+                    break;
                 default:
                     break;
             }

@@ -824,7 +824,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 2028793407
   m_SortingLayer: 2
-  m_SortingOrder: 1
+  m_SortingOrder: 2
   m_Sprite: {fileID: 21300000, guid: 371fa23a16c2b470dbbdf50d24a9c247, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -1044,7 +1044,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 2028793407
   m_SortingLayer: 2
-  m_SortingOrder: 1
+  m_SortingOrder: 2
   m_Sprite: {fileID: 21300000, guid: 371fa23a16c2b470dbbdf50d24a9c247, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -1166,26 +1166,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 831e33a40abfb0142bcf36efc8a591dc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _speed: 5
-  _thrustMultiplier: 1.5
-  _playerLives: 3
-  _ammoCount: 15
-  _maxAmmo: 15
   _laserPrefab: {fileID: 1679262638909794735, guid: f5335792648acd04c826b1bf1b955571, type: 3}
   _tripleShotPrefab: {fileID: 1861069938373273046, guid: 880aff6ddf7e2124ab99432659156591, type: 3}
+  _homingMissilePrefab: {fileID: 3696472981388998583, guid: 94e40dcf631eacb4f8901f9964186caa, type: 3}
   _damageAnims:
   - {fileID: 425178909}
   - {fileID: 804502759}
   - {fileID: 1329187655}
-  _laserSpawnOffset: 0.868
-  _reloadRate: 0.15
-  _score: 0
-  _tripleShotActive: 0
-  _tripleShotDuration: 5
-  _speedBoostMultiplier: 1.5
-  _speedBoostDuration: 5
   _shield: {fileID: 1783052553}
-  _shieldsActive: 0
+  _laserSpawnOffset: 0.868
+  _missleSpawnOffset: 0.95
 --- !u!212 &1326859879
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1225,7 +1215,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 2028793407
   m_SortingLayer: 2
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: 1b4a8fdd39d3a45d0a9ee484ad6800ec, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -1468,7 +1458,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 2028793407
   m_SortingLayer: 2
-  m_SortingOrder: 1
+  m_SortingOrder: 2
   m_Sprite: {fileID: 21300000, guid: 371fa23a16c2b470dbbdf50d24a9c247, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -1661,6 +1651,7 @@ MonoBehaviour:
   - {fileID: 4502497640007101876, guid: 9c6b80b8398cd2f4fb58f3bc06bbbf95, type: 3}
   - {fileID: 1555745186696230714, guid: 92face2d45b560549849819a33536471, type: 3}
   - {fileID: 967169598817373977, guid: 5721e16040b4fd940b48257d87051220, type: 3}
+  - {fileID: 1081901591321014475, guid: c5603db0140701e498cca1f0dde8e7c2, type: 3}
   _spawnHeight: 7.4
   _spawnLeftBound: -9.4
   _spawnRightBound: 9.4
@@ -2125,6 +2116,10 @@ PrefabInstance:
     - target: {fileID: 5582287835147840895, guid: b92807788cd125941957497916941c44, type: 3}
       propertyPath: m_Name
       value: Asteroid
+      objectReference: {fileID: 0}
+    - target: {fileID: 5582287835147840895, guid: b92807788cd125941957497916941c44, type: 3}
+      propertyPath: m_TagString
+      value: Enemy
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b92807788cd125941957497916941c44, type: 3}

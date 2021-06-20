@@ -34,11 +34,11 @@ public class SpawnManager : MonoBehaviour
 
     IEnumerator SpawnPowerupRoutine()
     {
-        yield return new WaitForSeconds(3.5f);
+        yield return new WaitForSeconds(0.5f);
         while (_stopSpawning == false)
         {
             var spawnPos = new Vector3(Random.Range(_spawnLeftBound, _spawnRightBound), _spawnHeight, 0);
-            var interval = Random.Range(3f, 7f);
+            var interval = Random.Range(3f, 5f);
             var randomPowerUp = Random.Range(0, _powerUps.Length);
 
             Instantiate(_powerUps[randomPowerUp], spawnPos, Quaternion.identity);
@@ -49,5 +49,10 @@ public class SpawnManager : MonoBehaviour
     public void PlayerKilled()
     {
         _stopSpawning = true;
+    }
+
+    public int EnemyCount()
+    {
+        return _enemyContainer.transform.childCount;
     }
 }
